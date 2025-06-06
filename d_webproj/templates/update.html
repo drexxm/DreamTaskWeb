@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Update Task{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">✏️ Edit Task</h2>
+
+<form method="POST">
+  <div class="mb-3">
+    <label class="form-label">Title</label>
+    <input type="text" class="form-control" name="title" value="{{ task.title }}" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Status</label>
+    <select name="status" class="form-select">
+      <option value="pending" {% if task.status == 'pending' %}selected{% endif %}>Pending</option>
+      <option value="completed" {% if task.status == 'completed' %}selected{% endif %}>Completed</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-success">Update</button>
+</form>
+{% endblock %}

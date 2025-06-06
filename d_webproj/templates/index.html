@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Task List{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">📋 Task List</h2>
+
+<table class="table table-striped table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for task in tasks %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ task.title }}</td>
+      <td>
+        <span class="badge bg-{{ 'success' if task.status == 'completed' else 'secondary' }}">
+          {{ task.status }}
+        </span>
+      </td>
+      <td>
+        <a href="/update/{{ task.id }}" class="btn btn-sm btn-warning">Edit</a>
+        <a href="/delete/{{ task.id }}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this task?')">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
