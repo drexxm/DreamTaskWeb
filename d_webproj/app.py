@@ -1,33 +1,33 @@
 from flask import Flask
 from config import Config
-from models.task import db
-from routes.task_routes import task_bp
+from models import db
 from models.user import User
-from flask_login import LoginManager
+from models.task import Task
 from routes.auth_routes import auth
-
+from routes.task_routes import task_bp
+from flask_login import LoginManager
 
 app = Flask(__name__)
-app.config.from_object(Config)
+app.config.from_object('config.Config')
 
+# ✅ Bind SQLAlchemy กับ app
 db.init_app(app)
-app.register_blueprint(task_bp)
-# for login
-app.register_blueprint(auth) 
 
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run(debug=True)
-    
-
-# ===login part ===
+# ✅ Login Manager
 login_manager = LoginManager()
-login_manager.login_view = 'auth.login'  # redirect ถ้ายังไม่ได้ login
+login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
 
-# โหลด user จาก session
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+# ✅ Register Blueprints
+app.register_blueprint(auth)
+app.register_blueprint(task_bp)
+
+# ✅ สร้างตาราง
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True)

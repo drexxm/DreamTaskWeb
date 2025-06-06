@@ -11,6 +11,7 @@ def login():
         user = User.query.filter_by(username=request.form['username']).first()
         if user and check_password_hash(user.password, request.form['password']):
             login_user(user)
+            flash(f"Welcome back, {user.username}!")
             return redirect(url_for('task_bp.index'))
         flash('Invalid credentials')
     return render_template('login.html')
@@ -18,7 +19,9 @@ def login():
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        hashed_pw = generate_password_hash(request.form['password'], method='sha256')
+        hashed_pw = generate_password_hash(request.form['password'], 
+                                           method='pbkdf2:sha256', 
+                                           salt_length=8)
         new_user = User(username=request.form['username'], password=hashed_pw)
         db.session.add(new_user)
         db.session.commit()

@@ -4,13 +4,19 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
-        <li class="nav-item"><a class="nav-link" href="/create">Add Task</a></li>
-        <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+          {% if current_user.is_authenticated %}
+          <li class="nav-item">
+            <span class="navbar-text text-light me-2">Hi! {{ current_user.username }}</span>
+          </li>
+          {% endif %}
+          <li class="nav-item"><a class="nav-link" href="/create">Add Task</a></li>
+          <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+          <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
       </ul>
     </div>
   </div>
