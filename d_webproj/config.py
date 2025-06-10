@@ -1,8 +1,9 @@
 import os
+import urllib.parse
 
-# old DB SQLite
+# MySQL DB
 class Config:
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://3306:SmartAccess@2025@localhost/taskmanager1"
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://iTAC:SmartAccess%402025@localhost:3306/taskmanager1"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = "your_secret_key"
 
