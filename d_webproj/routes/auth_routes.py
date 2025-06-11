@@ -11,6 +11,9 @@ def login():
         user = User.query.filter_by(username=request.form['username']).first()
         if user and check_password_hash(user.password, request.form['password']):
             login_user(user)
+            if user.role == 'admin':
+                flash("👑 Welcome, admin!")
+                return redirect(url_for('admin_bp.manage_users')) # ???
             flash(f"Welcome back, {user.username}!")
             return redirect(url_for('task_bp.index'))
         flash('Invalid credentials')
